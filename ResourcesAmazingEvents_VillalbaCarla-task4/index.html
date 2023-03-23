@@ -68,34 +68,49 @@
 
     </section>
 
-
+<div id="app">
 
     <!-- CHECKBOX -->
     <div class="contenedorCheck">
+<template v-if="categorias" v-for="category of categorias">
       <form>
       <div class="categories categ-container class_checks" id="check_bar" type="checkbox">
       <div id="checks_container">
+        <input class="checks" type="checkbox" name="{{category}}" id="{{category}}" :value= "category" v-on:change="filtrar" v-model="checked"> 
+        <label class="label-text" for="{{category}}">{{category}}</label>
       </div>
       </div>
     </form>
+  </template>
     <form >
       <div>
-        <input type="search" name="search" id="search" placeholder="Search">
+        <input type="search" name="search" id="search" placeholder="Search"  v-model="nombreIngresado" @keyup="filtrar">
         <label class="p-text" for="search"><i class="bi bi-search"></i></label>
         
       </div>
 
    
   </form>
+
 </div>
 
     <!-- CARDS -->
     <div class="c-container" id="cards-container">
-
+      <template v-for="eventos of filtro" v-if="filtro.length > 0">
+      <div class="card">
+        <img :src="eventos.image" >
+                  <h2>{{eventos.name}}</h2>
+                  <div class= "content">
+                  <p>{{eventos.description}}</p>
+                  <a href="" class="btn btn-outline-info">price: {{eventos.price}}</a>
+                  <a href="'./details.html?_id=' + eventos._id" class="btn btn-outline-info">details</a>
+      </div>
+      </div>
+    </template>
     </div>
   </main>
   <footer>
-
+  </div>
     <div class="footer">
 
       <span class="social-icon"> <a href="#"> <img src="./assets/img/instagram3.png" alt="instagram"
@@ -116,6 +131,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
  <!--  <script src="./assets/js/data.js"></script> -->
   <script src="./assets/js/main.js"></script>

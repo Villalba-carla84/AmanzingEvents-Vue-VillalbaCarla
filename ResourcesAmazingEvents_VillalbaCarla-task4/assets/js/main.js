@@ -1,5 +1,5 @@
 //  console.log(data);
-let form = document.forms
+/* let form = document.forms
 let cardsContainer = document.getElementById("cards-container")
 
 let inputText = document.querySelector('input[type="search"]')
@@ -22,6 +22,7 @@ async function fetchData(urlApi) {
 fetchData(url)
 
 //*****checkbox*****///////
+/*
 function categories(arrayEvents){
   let selector = document.querySelector(`#check_bar`)
   let categories = []
@@ -40,9 +41,9 @@ categories.forEach(category => {
 selector.appendChild(div)
 
 })
-}
+}*/
 ///****FILTRO CRUZADO***
-
+/* 
 console.log(form)
  function filtrarCategoriasCheckeadas(arrayEventos) {
   let nodeListCheckbox = document.querySelectorAll('input[type="checkbox"]')
@@ -68,10 +69,10 @@ function filters(events) {
   inputText.addEventListener('keyup', () => {
       createTemplate(filtrarCategoriasCheckeadas(searchText(inputText.value, events)))
   })
-}
+}*/
 ///*******CARD******//////
 
-function message() {
+/*function message() {
   let message = document.createElement('p')
   message.textContent= "We are sorry!,It seems your search has been unsuccessful.";
   let imgSearch = document.createElement('img')
@@ -105,3 +106,54 @@ function createTemplate(arrayEventsFiltereds) {
 }
 
 
+ */
+
+const{createApp} =Vue;
+
+console.log (Vue)
+
+createApp(
+  {
+    data(){
+      return{
+          eventos:[],
+          nombreIngresado: '',
+          filtro:[],
+          categorias:[],
+          filtroPorText:[],
+          checked:[]
+      }
+    },
+    created(){
+       fetch('https://mindhub-xj03.onrender.com/api/amazing')
+       .then(response => response.json())
+       .then(data => {
+        this.eventos = data.events
+        this.filtro =this.eventos
+        this.categorias= [...new Set(this.eventos.map(event=> event.category))]
+        console.log(this.categorias)
+        
+       })
+       .catch(err => console.log(err))
+
+
+
+    },
+    methods:{
+      filtrar(){
+        this.filtro=this.eventos.filter(event=>{
+          return(this.checked.includes(event.category)|| this.checked.length ===0)&& event.name.toLowerCase().includes(this.nombreIngresado.toLowerCase())
+        })
+      }
+
+
+
+    },
+    computed:{
+
+
+    },
+
+
+
+  }).mount("#app")
